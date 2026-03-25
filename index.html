@@ -8,11 +8,11 @@
 <style>
 :root {
   --green: #00FF41;
-  --green2: #00CC33;
   --red: #FF003C;
   --orange: #FF6600;
   --yellow: #FFE000;
   --cyan: #00FFFF;
+  --purple: #BB00FF;
   --bg: #000000;
   --bg2: #030A03;
   --bg3: #050F05;
@@ -59,7 +59,7 @@ body::before {
   0%,49%,100% { background: var(--red); color: #000; }
   50%,99% { background: #000; color: var(--red); }
 }
-.ticker { display: inline-block; animation: ticker 28s linear infinite; white-space: nowrap; }
+.ticker { display: inline-block; animation: ticker 30s linear infinite; white-space: nowrap; }
 @keyframes ticker { from { transform: translateX(100vw); } to { transform: translateX(-100%); } }
 
 header {
@@ -128,8 +128,7 @@ main { max-width: 1000px; margin: 0 auto; padding: 40px 24px 60px; }
 .corner.br { bottom: 8px; right: 8px; border-bottom: 2px solid var(--red); border-right: 2px solid var(--red); }
 .hero-title {
   font-family: var(--orb); font-size: 2.6rem; font-weight: 900;
-  color: #fff; line-height: 1; margin-bottom: 6px;
-  letter-spacing: 0.04em;
+  color: #fff; line-height: 1; margin-bottom: 6px; letter-spacing: 0.04em;
 }
 .hero-title .red { color: var(--red); text-shadow: 0 0 20px rgba(255,0,60,0.7); }
 .hero-title .grn { color: var(--green); text-shadow: 0 0 20px rgba(0,255,65,0.5); }
@@ -146,6 +145,7 @@ main { max-width: 1000px; margin: 0 auto; padding: 40px 24px 60px; }
 }
 .section-header::before { content: '>>'; color: var(--green); }
 
+/* TARGETS */
 .targets-grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 12px; margin-bottom: 40px;
@@ -171,6 +171,83 @@ main { max-width: 1000px; margin: 0 auto; padding: 40px 24px 60px; }
 }
 .threat-dot { width: 6px; height: 6px; background: var(--red); border-radius: 50%; animation: live 0.8s infinite; }
 
+/* ═══ AFFILIATE LINK SECTION ═══ */
+.affiliate-section {
+  background: #000;
+  border: 1px solid var(--purple);
+  margin-bottom: 40px;
+  position: relative;
+  animation: purple-pulse 4s ease-in-out infinite;
+}
+@keyframes purple-pulse {
+  0%,100% { box-shadow: none; }
+  50% { box-shadow: 0 0 25px 2px rgba(187,0,255,0.12); }
+}
+.affiliate-section::before {
+  content: '[ LINK AFFILIATO SOSPETTO — ANALISI STRUTTURA URL ]';
+  position: absolute; top: -1px; left: 24px;
+  background: var(--purple); color: #000;
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.2em; padding: 3px 10px;
+  font-family: var(--mono);
+}
+.aff-header {
+  background: #0A0010; border-bottom: 1px solid #2A0A4A;
+  padding: 8px 16px; display: flex; align-items: center; gap: 8px; padding-top: 20px;
+}
+.aff-title { font-size: 0.65rem; color: #6A2A9A; letter-spacing: 0.15em; margin-left: 8px; flex: 1; text-align: center; }
+.aff-body { padding: 20px 24px; }
+
+.url-display {
+  background: #050005;
+  border: 1px solid #1A0A2A;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  word-break: break-all;
+}
+.url-display .url-label { font-size: 0.6rem; color: #4A1A7A; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px; }
+.url-raw { font-size: 0.72rem; color: #888; line-height: 1.6; }
+.url-raw .url-host { color: var(--purple); font-weight: bold; }
+.url-raw .url-param-key { color: var(--orange); }
+.url-raw .url-param-val { color: #FFD700; }
+.url-raw .url-sep { color: #444; }
+
+.params-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.param-card {
+  background: #050005;
+  border: 1px solid #1A0A2A;
+  border-left: 3px solid var(--purple);
+  padding: 14px 16px;
+}
+.param-name {
+  font-family: var(--orb); font-size: 0.6rem; color: var(--orange);
+  letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px;
+}
+.param-value {
+  font-size: 0.78rem; color: #FFD700; margin-bottom: 6px;
+  word-break: break-all;
+}
+.param-meaning { font-size: 0.68rem; color: #5A3A8A; line-height: 1.5; }
+.param-alert { font-size: 0.68rem; color: var(--red); margin-top: 4px; font-weight: bold; }
+
+.verdict-box {
+  background: rgba(187,0,255,0.05);
+  border: 1px solid var(--purple);
+  padding: 16px 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+.verdict-item { display: flex; align-items: flex-start; gap: 10px; }
+.verdict-icon { color: var(--red); font-size: 0.8rem; margin-top: 2px; flex-shrink: 0; }
+.verdict-text { font-size: 0.7rem; color: #8A4AAA; line-height: 1.5; }
+.verdict-text strong { color: #CC88FF; display: block; margin-bottom: 2px; }
+
+/* TERMINAL */
 .terminal { background: #000; border: 1px solid #0A2A0A; margin-bottom: 40px; overflow: hidden; }
 .term-header {
   background: #050F05; border-bottom: 1px solid #0A2A0A;
@@ -182,8 +259,7 @@ main { max-width: 1000px; margin: 0 auto; padding: 40px 24px 60px; }
 .term-title { font-size: 0.65rem; color: #1A5A1A; letter-spacing: 0.15em; margin-left: 8px; flex: 1; text-align: center; }
 .term-status { font-size: 0.6rem; color: var(--green); animation: blink 1s infinite; }
 @keyframes blink { 0%,49%{opacity:1;} 50%,100%{opacity:0;} }
-.term-body { padding: 20px 24px; min-height: 420px; overflow-y: auto; max-height: 520px; }
-
+.term-body { padding: 20px 24px; min-height: 400px; overflow-y: auto; max-height: 500px; }
 .t-line { font-size: 0.75rem; line-height: 1.9; display: block; opacity: 0; transition: opacity 0.1s; }
 .t-line.show { opacity: 1; }
 .t-line .p { color: var(--green); }
@@ -192,32 +268,27 @@ main { max-width: 1000px; margin: 0 auto; padding: 40px 24px 60px; }
 .t-line .w { color: var(--red); font-weight: bold; }
 .t-line .g { color: var(--green); }
 .t-line .o { color: var(--orange); }
-.t-line .y { color: var(--yellow); }
+.t-line .y { color: #FFD700; }
 .t-line .d { color: #1A5A1A; }
+.t-line .pu { color: var(--purple); }
 .blank-line { height: 10px; display: block; }
-
-.progress-row {
-  display: flex; align-items: center; gap: 12px;
-  padding: 2px 0; opacity: 0; transition: opacity 0.1s;
-}
+.progress-row { display: flex; align-items: center; gap: 12px; padding: 2px 0; opacity: 0; transition: opacity 0.1s; }
 .progress-row.show { opacity: 1; }
 .progress-label { font-size: 0.7rem; color: #2A6A2A; min-width: 200px; }
 .pbar { height: 6px; background: #0A2A0A; border: 1px solid #0D3A0D; width: 200px; overflow: hidden; }
-.pfill { height: 100%; background: var(--green); width: 0%; box-shadow: 0 0 6px var(--green); }
+.pfill { height: 100%; width: 0%; box-shadow: 0 0 6px var(--green); }
+.pfill.green { background: var(--green); }
+.pfill.purple { background: var(--purple); box-shadow: 0 0 6px var(--purple); }
 .ppct { font-size: 0.65rem; color: var(--green); min-width: 36px; }
 
-.modus-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px; margin-bottom: 40px;
-}
-.modus-card {
-  background: var(--bg2); border: 1px solid #0A2A0A;
-  border-top: 2px solid var(--orange); padding: 20px;
-}
+/* MODUS */
+.modus-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 40px; }
+.modus-card { background: var(--bg2); border: 1px solid #0A2A0A; border-top: 2px solid var(--orange); padding: 20px; }
 .modus-num { font-family: var(--orb); font-size: 1.8rem; font-weight: 900; color: rgba(255,102,0,0.15); line-height: 1; margin-bottom: 6px; }
 .modus-title { font-family: var(--orb); font-size: 0.65rem; font-weight: 700; color: var(--orange); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
 .modus-desc { font-size: 0.72rem; color: #3A7A3A; line-height: 1.7; }
 
+/* FLAGS */
 .flags-list { background: var(--bg2); border: 1px solid #0A2A0A; margin-bottom: 40px; }
 .flag-item { display: flex; align-items: flex-start; gap: 14px; padding: 16px 24px; border-bottom: 1px solid #050F05; transition: background 0.15s; }
 .flag-item:last-child { border-bottom: none; }
@@ -226,6 +297,7 @@ main { max-width: 1000px; margin: 0 auto; padding: 40px 24px 60px; }
 .flag-content strong { display: block; font-size: 0.78rem; color: #CCC; margin-bottom: 3px; }
 .flag-content p { font-size: 0.7rem; color: #2A6A2A; line-height: 1.6; }
 
+/* REPORT */
 .report-box { background: var(--bg2); border: 1px solid #0A2A0A; border-top: 3px solid var(--yellow); padding: 32px; margin-bottom: 40px; }
 .report-box h3 { font-family: var(--orb); font-size: 0.85rem; font-weight: 700; color: var(--yellow); letter-spacing: 0.15em; margin-bottom: 24px; text-shadow: 0 0 10px rgba(255,224,0,0.3); }
 .report-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
@@ -238,7 +310,6 @@ main { max-width: 1000px; margin: 0 auto; padding: 40px 24px 60px; }
 
 footer { border-top: 1px solid #0A2A0A; padding: 24px 32px; text-align: center; }
 footer p { font-size: 0.62rem; color: #1A4A1A; letter-spacing: 0.05em; line-height: 2; }
-
 .glitch-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 9996; opacity: 0; }
 
 @media (max-width: 600px) {
@@ -257,7 +328,7 @@ footer p { font-size: 0.62rem; color: #1A4A1A; letter-spacing: 0.05em; line-heig
 
 <div class="top-bar">
   <span class="ticker">
-    ⚠ ALLERTA ATTIVA · TRUFFA AVIATOR ALGORITMI · CANALI: @it_official_managerr · @Sergio_ProfessorStrategie_bot · @sergio_proff_bot · NON INVIATE DENARO · SEGNALATE ALLA POLIZIA POSTALE · commissariatodips.it · ⚠ ALLERTA ATTIVA · TRUFFA AVIATOR ALGORITMI · CANALI: @it_official_managerr · @Sergio_ProfessorStrategie_bot · @sergio_proff_bot · NON INVIATE DENARO ·
+    ⚠ ALLERTA ATTIVA · TRUFFA AVIATOR ALGORITMI · CANALI: @it_official_managerr · @Sergio_ProfessorStrategie_bot · @sergio_proff_bot · LINK AFFILIATO SOSPETTO RILEVATO: shogunaffiliates.com · ROCKET CASINO — NO LICENZA ADM/AAMS · NON INVIATE DENARO · SEGNALATE: commissariatodips.it · ⚠
   </span>
 </div>
 
@@ -284,10 +355,11 @@ footer p { font-size: 0.62rem; color: #1A4A1A; letter-spacing: 0.05em; line-heig
     <div class="hero-sub">
       Individui su Telegram si spacciano per esperti con accesso a presunti "algoritmi predittivi" per il gioco Aviator.
       Non esiste nessun algoritmo. Il gioco usa un RNG certificato — nessun sistema esterno può prevederne i risultati.
-      Questa è una truffa organizzata finalizzata a sottrarre denaro tramite pagamenti per segnali inesistenti.
+      Questa è una truffa organizzata. I truffatori guadagnano commissioni portando vittime su casinò senza licenza italiana.
     </div>
   </div>
 
+  <!-- TARGETS -->
   <div class="section-header">TARGET IDENTIFICATI — CANALI TELEGRAM SEGNALATI</div>
   <div class="targets-grid">
     <div class="target-card">
@@ -310,22 +382,113 @@ footer p { font-size: 0.62rem; color: #1A4A1A; letter-spacing: 0.05em; line-heig
     </div>
   </div>
 
+  <!-- AFFILIATE LINK ANALYSIS -->
+  <div class="section-header">LINK AFFILIATO SOSPETTO — ANALISI PARAMETRI URL</div>
+  <div class="affiliate-section">
+    <div class="aff-header">
+      <div class="term-dots"><div class="tdot r"></div><div class="tdot y"></div><div class="tdot g"></div></div>
+      <div class="aff-title">URL_ANALYZER · SHOGUNAFFILIATES TRACKING LINK · REPORT PUBBLICO</div>
+    </div>
+    <div class="aff-body">
+
+      <div class="url-display">
+        <div class="url-label">// URL SOSPETTO RILEVATO — LINK DI AFFILIAZIONE GAMBLING</div>
+        <div class="url-raw">
+          <span class="url-host">track.shogunaffiliates.com</span><span class="url-sep">/visit/?</span><span class="url-param-key">bta</span><span class="url-sep">=</span><span class="url-param-val">35771</span><span class="url-sep">&amp;</span><span class="url-param-key">nci</span><span class="url-sep">=</span><span class="url-param-val">5399</span><span class="url-sep">&amp;</span><span class="url-param-key">afp1</span><span class="url-sep">=</span><span class="url-param-val">af1b77d3-f0ec-4228-aa92-1dc6df80d627</span><span class="url-sep">&amp;</span><span class="url-param-key">afp10</span><span class="url-sep">=</span><span class="url-param-val">Schemes</span><span class="url-sep">&amp;</span><span class="url-param-key">utm_campaign</span><span class="url-sep">=</span><span class="url-param-val">Rocket</span>
+        </div>
+      </div>
+
+      <div class="params-grid">
+        <div class="param-card">
+          <div class="param-name">// PARAMETRO: bta</div>
+          <div class="param-value">35771</div>
+          <div class="param-meaning">ID univoco dell'affiliato — identifica chi riceve la commissione per ogni utente portato sulla piattaforma</div>
+          <div class="param-alert">⚠ Questo è l'ID del truffatore nel sistema affiliati</div>
+        </div>
+        <div class="param-card">
+          <div class="param-name">// PARAMETRO: nci</div>
+          <div class="param-value">5399</div>
+          <div class="param-meaning">ID campagna di acquisizione — traccia quale campagna pubblicitaria ha generato il click</div>
+          <div class="param-alert">⚠ Campagna attiva — il truffatore sta distribuendo questo link</div>
+        </div>
+        <div class="param-card">
+          <div class="param-name">// PARAMETRO: afp1 (Session ID)</div>
+          <div class="param-value" style="font-size:0.65rem;">af1b77d3-f0ec-4228-aa92-1dc6df80d627</div>
+          <div class="param-meaning">UUID di sessione — fingerprint univoco per tracciare il percorso della vittima dalla prima visita alla registrazione</div>
+          <div class="param-alert">⚠ Tracciamento completo del comportamento utente</div>
+        </div>
+        <div class="param-card" style="border-left-color: var(--red);">
+          <div class="param-name" style="color:var(--red);">// PARAMETRO: afp10 ⚠ CRITICO</div>
+          <div class="param-value" style="color:var(--red); font-size:1rem;">"Schemes"</div>
+          <div class="param-meaning">Categoria della campagna impostata dal truffatore stesso — letteralmente categorizzata come <strong style="color:#FF6666">"Schemi"</strong></div>
+          <div class="param-alert">⚠⚠ IL TRUFFATORE HA ETICHETTATO LA PROPRIA CAMPAGNA "SCHEMES"</div>
+        </div>
+        <div class="param-card">
+          <div class="param-name">// PARAMETRO: utm_campaign</div>
+          <div class="param-value">Rocket</div>
+          <div class="param-meaning">Piattaforma di destinazione: <strong style="color:#FFD700">Rocket Casino</strong> — casinò online che opera tramite la rete di affiliazione Shogun Affiliates</div>
+          <div class="param-alert">⚠ Rocket Casino: NESSUNA licenza ADM/AAMS italiana</div>
+        </div>
+        <div class="param-card">
+          <div class="param-name">// DOMINIO DI TRACKING</div>
+          <div class="param-value">shogunaffiliates.com</div>
+          <div class="param-meaning">Piattaforma di affiliazione gambling internazionale. Quando la vittima clicca il link, il truffatore riceve una commissione su ogni deposito effettuato</div>
+          <div class="param-alert">⚠ Schema: vittima perde soldi → truffatore guadagna</div>
+        </div>
+      </div>
+
+      <div class="verdict-box">
+        <div class="verdict-item">
+          <div class="verdict-icon">✗</div>
+          <div class="verdict-text">
+            <strong>Rocket Casino — Nessuna licenza ADM/AAMS</strong>
+            In Italia sono legali solo i casinò con licenza ADM. Rocket Casino non figura nell'elenco ufficiale degli operatori autorizzati. Nessuna tutela legale per il giocatore.
+          </div>
+        </div>
+        <div class="verdict-item">
+          <div class="verdict-icon">✗</div>
+          <div class="verdict-text">
+            <strong>Schema di guadagno chiaro</strong>
+            Il truffatore guadagna commissioni ogni volta che una vittima deposita su Rocket Casino tramite il suo link. Più soldi perde la vittima, più guadagna il truffatore.
+          </div>
+        </div>
+        <div class="verdict-item">
+          <div class="verdict-icon">✗</div>
+          <div class="verdict-text">
+            <strong>afp10="Schemes" — autoincriminante</strong>
+            Il truffatore stesso ha categorizzato la campagna come "Schemes" (Schemi) nel sistema di affiliazione. Ammissione implicita della natura fraudolenta dell'operazione.
+          </div>
+        </div>
+        <div class="verdict-item">
+          <div class="verdict-icon">✗</div>
+          <div class="verdict-text">
+            <strong>Non cliccare questo link</strong>
+            Il link installa cookie di tracciamento e porta su una piattaforma di gioco d'azzardo senza protezioni legali italiane. Ignorare e segnalare immediatamente.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TERMINAL -->
   <div class="section-header">ANALISI CANALI — REPORT ALLERTA FRODI</div>
   <div class="terminal">
     <div class="term-header">
       <div class="term-dots"><div class="tdot r"></div><div class="tdot y"></div><div class="tdot g"></div></div>
-      <div class="term-title">ANTISCAM_ITALIA · FRAUD_REPORT v2.4 · DOCUMENTO PUBBLICO DI ALLERTA</div>
+      <div class="term-title">ANTISCAM_ITALIA · FRAUD_REPORT v2.4 · DOCUMENTO PUBBLICO</div>
       <div class="term-status" id="term-status">■ RUNNING</div>
     </div>
     <div class="term-body" id="term-body"></div>
   </div>
 
+  <!-- MODUS -->
   <div class="section-header">MODUS OPERANDI — COME AGISCONO</div>
   <div class="modus-grid">
     <div class="modus-card">
       <div class="modus-num">01</div>
       <div class="modus-title">Contatto Iniziale</div>
-      <div class="modus-desc">Approccio tramite bot o canale Telegram. Tono amichevole e professionale. Spesso intercettano utenti che cercano info su Aviator.</div>
+      <div class="modus-desc">Approccio tramite bot o canale Telegram. Tono amichevole e professionale. Intercettano utenti che cercano info su Aviator.</div>
     </div>
     <div class="modus-card">
       <div class="modus-num">02</div>
@@ -335,41 +498,43 @@ footer p { font-size: 0.62rem; color: #1A4A1A; letter-spacing: 0.05em; line-heig
     <div class="modus-card">
       <div class="modus-num">03</div>
       <div class="modus-title">Segnale Gratuito</div>
-      <div class="modus-desc">Inviano un primo segnale "omaggio" risultante vincente (scelto a posteriori). Serve a creare fiducia prima di chiedere soldi.</div>
+      <div class="modus-desc">Inviano un primo segnale "gratuito" vincente (scelto a posteriori). Serve a creare fiducia prima di chiedere soldi o portarti sul casinò.</div>
     </div>
     <div class="modus-card">
       <div class="modus-num">04</div>
-      <div class="modus-title">Richiesta Pagamento</div>
-      <div class="modus-desc">Chiedono denaro per "accesso VIP", abbonamenti o "investimenti garantiti". Tramite crypto, ricariche o bonifico non tracciabile.</div>
+      <div class="modus-title">Link Affiliato</div>
+      <div class="modus-desc">Ti mandano il link shogunaffiliates → Rocket Casino. Ogni tuo deposito genera commissioni per il truffatore. Più perdi, più guadagna lui.</div>
     </div>
     <div class="modus-card">
       <div class="modus-num">05</div>
-      <div class="modus-title">Sparizione</div>
-      <div class="modus-desc">Dopo l'incasso spariscono o cambiano username. I bot vengono ricreati immediatamente per ricominciare su nuove vittime.</div>
+      <div class="modus-title">Pagamento Diretto</div>
+      <div class="modus-desc">In parallelo chiedono anche pagamenti diretti per "accesso VIP" o "segnali premium". Doppio guadagno: affiliazioni + pagamenti diretti.</div>
     </div>
     <div class="modus-card">
       <div class="modus-num">06</div>
       <div class="modus-title">Verità Tecnica</div>
-      <div class="modus-desc">Aviator usa RNG certificato e indipendente. Nessun algoritmo esterno può prevederne i risultati. Chi dice il contrario mente.</div>
+      <div class="modus-desc">Aviator usa RNG certificato. Nessun algoritmo può prevederne i risultati. Rocket Casino non ha licenza ADM: zero tutele legali in Italia.</div>
     </div>
   </div>
 
+  <!-- RED FLAGS -->
   <div class="section-header">SEGNALI D'ALLARME — RED FLAGS</div>
   <div class="flags-list">
     <div class="flag-item"><div class="flag-icon">✗</div><div class="flag-content"><strong>Promettono guadagni certi o garantiti</strong><p>Nessun gioco d'azzardo ha esiti prevedibili. Chi garantisce vincite mente per sottrarre denaro.</p></div></div>
-    <div class="flag-item"><div class="flag-icon">✗</div><div class="flag-content"><strong>Chiedono pagamenti anticipati per "segnali" o accessi VIP</strong><p>Un servizio legittimo non richiede denaro anticipato su Telegram. È sempre indicatore di truffa.</p></div></div>
+    <div class="flag-item"><div class="flag-icon">✗</div><div class="flag-content"><strong>Mandano link di affiliazione a casinò senza licenza ADM</strong><p>Il link shogunaffiliates/Rocket Casino è classificato "Schemes" dal truffatore stesso e porta su piattaforma non autorizzata in Italia.</p></div></div>
     <div class="flag-item"><div class="flag-icon">✗</div><div class="flag-content"><strong>Usano bot automatizzati per il contatto di massa</strong><p>I bot permettono di raggiungere migliaia di persone a costo zero — tattica tipica delle truffe scalabili.</p></div></div>
     <div class="flag-item"><div class="flag-icon">✗</div><div class="flag-content"><strong>Screenshot di vincite non verificabili</strong><p>I screenshot si falsificano in pochi secondi con qualsiasi editor. Non costituiscono prova di nulla.</p></div></div>
     <div class="flag-item"><div class="flag-icon">✗</div><div class="flag-content"><strong>Account multipli di backup</strong><p>Avere più bot/canali di riserva è tipico di chi viene bloccato frequentemente per attività fraudolenta.</p></div></div>
-    <div class="flag-item"><div class="flag-icon">✗</div><div class="flag-content"><strong>Pressione psicologica e urgenza artificiale</strong><p>"Offerta a tempo limitato", "solo 3 posti rimasti" — tattiche per impedire alla vittima di riflettere.</p></div></div>
+    <div class="flag-item"><div class="flag-icon">✗</div><div class="flag-content"><strong>Pressione psicologica e urgenza artificiale</strong><p>"Offerta a tempo limitato", "solo 3 posti rimasti" — tattiche per impedire alla vittima di riflettere prima di agire.</p></div></div>
   </div>
 
+  <!-- REPORT -->
   <div class="report-box">
     <h3>[ AZIONE IMMEDIATA — COME SEGNALARE ]</h3>
     <div class="report-steps">
-      <div class="r-step"><div class="r-num">01</div><div class="r-title">Segnala su Telegram</div><div class="r-desc">Apri il canale → tre puntini (⋮) → Segnala → Spam/Truffa. Fallo per tutti e 3 i canali identificati. Puoi anche scrivere a @SpamBot.</div></div>
-      <div class="r-step"><div class="r-num">02</div><div class="r-title">Polizia Postale</div><div class="r-desc">Denuncia online: <a href="https://www.commissariatodips.it" target="_blank">commissariatodips.it</a> oppure di persona al commissariato più vicino.</div></div>
-      <div class="r-step"><div class="r-num">03</div><div class="r-title">Conserva le Prove</div><div class="r-desc">Screenshot di tutte le conversazioni e ricevute di pagamento (crypto, ricariche, bonifici). Sono fondamentali per la denuncia.</div></div>
+      <div class="r-step"><div class="r-num">01</div><div class="r-title">Segnala su Telegram</div><div class="r-desc">Apri il canale → tre puntini (⋮) → Segnala → Spam/Truffa. Fallo per tutti e 3 i canali. Scrivi anche a @SpamBot su Telegram.</div></div>
+      <div class="r-step"><div class="r-num">02</div><div class="r-title">Polizia Postale</div><div class="r-desc">Denuncia online: <a href="https://www.commissariatodips.it" target="_blank">commissariatodips.it</a> — includi lo screenshot del link affiliato come prova.</div></div>
+      <div class="r-step"><div class="r-num">03</div><div class="r-title">Conserva le Prove</div><div class="r-desc">Screenshot di conversazioni, link ricevuti, ricevute di pagamento. Il link affiliato con "Schemes" è già una prova significativa.</div></div>
       <div class="r-step"><div class="r-num">04</div><div class="r-title">Diffondi l'Allerta</div><div class="r-desc">Condividi questa pagina. Più segnalazioni ricevono le autorità, più rapidamente vengono chiusi i canali truffaldini.</div></div>
     </div>
   </div>
@@ -379,8 +544,8 @@ footer p { font-size: 0.62rem; color: #1A4A1A; letter-spacing: 0.05em; line-heig
 <footer>
   <p>
     ANTISCAM_ITALIA · Portale di pubblica utilità · Informazioni basate su segnalazioni ricevute<br>
-    I dati riportati (username Telegram) sono identificativi pubblici segnalati da utenti · Ultimo aggiornamento: 2025<br>
-    <span style="color:#0D2A0D">Questo sito non è affiliato con Telegram S.A. · Per contestazioni contattare tramite canali ufficiali</span>
+    I dati riportati (username Telegram, parametri URL) sono identificativi pubblici segnalati da utenti · 2025<br>
+    <span style="color:#0D2A0D">Questo sito non è affiliato con Telegram S.A. o Shogun Affiliates · Per contestazioni contattare tramite canali ufficiali</span>
   </p>
 </footer>
 
@@ -422,7 +587,7 @@ function triggerGlitch() {
   const el = document.getElementById('glitch');
   const y = Math.random() * 60 + 20;
   const h = Math.random() * 3 + 1;
-  el.style.background = `linear-gradient(transparent ${y}%, rgba(255,0,60,0.12) ${y}%, rgba(255,0,60,0.12) ${y+h}%, transparent ${y+h}%)`;
+  el.style.background = `linear-gradient(transparent ${y}%, rgba(255,0,60,0.1) ${y}%, rgba(255,0,60,0.1) ${y+h}%, transparent ${y+h}%)`;
   el.style.opacity = '1';
   setTimeout(() => { el.style.opacity = '0'; }, 80);
 }
@@ -430,42 +595,43 @@ setInterval(triggerGlitch, 2800);
 
 // Terminal
 const termLines = [
-  { type:'cmd',  t:'root@antiscam:~$ ./analyze_fraud_report.sh --input="@it_official_managerr,@Sergio_ProfessorStrategie_bot,@sergio_proff_bot"' },
+  { type:'cmd', t:'root@antiscam:~$ ./fraud_report.sh --telegram="@it_official_managerr,@Sergio_ProfessorStrategie_bot,@sergio_proff_bot" --url="track.shogunaffiliates.com"' },
   { type:'blank' },
   { type:'info', t:'[*] Inizializzazione sistema di allerta frodi v2.4 ...' },
-  { type:'info', t:'[*] Caricamento database pattern truffe conosciuti ...' },
-  { type:'prog',  label:'Caricamento pattern DB', id:'p0' },
+  { type:'prog', label:'Caricamento pattern DB', color:'green' },
   { type:'blank' },
-  { type:'info', t:'[*] ─── ANALISI REPORT · TARGET #1 ───────────────────────' },
-  { type:'info', t:'[*] Username        : @it_official_managerr' },
-  { type:'res',  t:'    Tipologia       : Account operatore umano (non bot)' },
-  { type:'res',  t:'    Attività nota   : Vendita segnali Aviator a pagamento' },
-  { type:'res',  t:'    Pattern truffa  : Advance-fee fraud / False endorsement' },
-  { type:'prog',  label:'Analisi pattern #1', id:'p1' },
-  { type:'warn', t:'    [!] PATTERN TRUFFA RILEVATO — ACCOUNT SEGNALATO DA UTENTI' },
+  { type:'info', t:'[*] ─── ANALISI CANALI TELEGRAM ───────────────────────────────' },
+  { type:'info', t:'[*] TARGET #1 : @it_official_managerr' },
+  { type:'res',  t:'    Tipologia : Account operatore umano' },
+  { type:'res',  t:'    Attività  : Vendita segnali Aviator a pagamento' },
+  { type:'warn', t:'    [!] PATTERN TRUFFA RILEVATO — SEGNALATO DA UTENTI' },
   { type:'blank' },
-  { type:'info', t:'[*] ─── ANALISI REPORT · TARGET #2 ───────────────────────' },
-  { type:'info', t:'[*] Username        : @Sergio_ProfessorStrategie_bot' },
-  { type:'res',  t:'    Tipologia       : Bot automatizzato Telegram' },
-  { type:'res',  t:'    Funzione        : Contatto massivo automatico potenziali vittime' },
-  { type:'res',  t:'    Collegamento    : Stesso schema operativo di TARGET #1' },
-  { type:'prog',  label:'Analisi pattern #2', id:'p2' },
-  { type:'warn', t:'    [!] BOT FRAUDOLENTO — RETE ORGANIZZATA RILEVATA' },
+  { type:'info', t:'[*] TARGET #2 : @Sergio_ProfessorStrategie_bot' },
+  { type:'res',  t:'    Tipologia : Bot automatizzato Telegram' },
+  { type:'res',  t:'    Funzione  : Contatto massivo automatico vittime' },
+  { type:'warn', t:'    [!] BOT FRAUDOLENTO — RETE ORGANIZZATA' },
   { type:'blank' },
-  { type:'info', t:'[*] ─── ANALISI REPORT · TARGET #3 ───────────────────────' },
-  { type:'info', t:'[*] Username        : @sergio_proff_bot' },
-  { type:'res',  t:'    Tipologia       : Bot secondario / account di backup' },
-  { type:'res',  t:'    Funzione        : Ridondanza operativa post-blocco canale principale' },
-  { type:'res',  t:'    Schema MO       : Identico a TARGET #2 — stesso operatore' },
-  { type:'prog',  label:'Analisi pattern #3', id:'p3' },
-  { type:'warn', t:'    [!] ACCOUNT BACKUP CONFERMATO — RETE ATTIVA SU PIÙ CANALI' },
+  { type:'info', t:'[*] TARGET #3 : @sergio_proff_bot' },
+  { type:'res',  t:'    Tipologia : Bot secondario / backup post-blocco' },
+  { type:'warn', t:'    [!] ACCOUNT RIDONDANZA CONFERMATO' },
+  { type:'prog', label:'Analisi canali Telegram', color:'green' },
+  { type:'blank' },
+  { type:'pu',   t:'[*] ─── ANALISI LINK AFFILIATO SOSPETTO ──────────────────────' },
+  { type:'pu',   t:'[*] Dominio  : track.shogunaffiliates.com' },
+  { type:'pu',   t:'[*] bta=35771         → ID affiliato truffatore (riceve commissioni)' },
+  { type:'pu',   t:'[*] nci=5399          → ID campagna attiva' },
+  { type:'pu',   t:'[*] afp1=af1b77d3...  → UUID sessione (fingerprint vittima)' },
+  { type:'w2',   t:'[!] afp10=Schemes     → CAMPAGNA AUTO-CATEGORIZZATA "SCHEMES" !!!' },
+  { type:'pu',   t:'[*] utm_campaign=Rocket → Destinazione: Rocket Casino' },
+  { type:'prog', label:'Analisi parametri URL', color:'purple' },
+  { type:'warn', t:'    [!] ROCKET CASINO: NESSUNA LICENZA ADM/AAMS ITALIANA' },
+  { type:'warn', t:'    [!] SCHEMA: vittima deposita → truffatore riceve commissione' },
   { type:'blank' },
   { type:'div',  t:'══════════════════════════════════════════════════════════════' },
-  { type:'ok',   t:'[✓] RIEPILOGO ALLERTA — ANTISCAM_ITALIA' },
-  { type:'ok',   t:'[✓] 3 canali segnalati come appartenenti alla stessa rete' },
-  { type:'ok',   t:'[✓] Schema: Falsi algoritmi Aviator → pagamento anticipato → fuga' },
-  { type:'ok',   t:'[✓] Nota tecnica: RNG certificato di Aviator non è prevedibile' },
-  { type:'warn', t:'[!] AZIONE: Segnala su Telegram + denuncia a commissariatodips.it' },
+  { type:'ok',   t:'[✓] 3 canali Telegram identificati — rete truffaldina attiva' },
+  { type:'ok',   t:'[✓] 1 link affiliato gambling sospetto — categoria "Schemes"' },
+  { type:'ok',   t:'[✓] Piattaforma destinazione senza licenza ADM/AAMS' },
+  { type:'warn', t:'[!] AZIONE: Segnalare su Telegram + denuncia commissariatodips.it' },
   { type:'div',  t:'══════════════════════════════════════════════════════════════' },
   { type:'blank' },
   { type:'ok',   t:'[✓] Report completato. Condividi questa pagina per proteggere altri utenti.' },
@@ -499,9 +665,12 @@ function addTermLine(data) {
     lbl.className = 'progress-label';
     lbl.textContent = '    [>>] ' + data.label;
     const bar = document.createElement('div'); bar.className = 'pbar';
-    const fill = document.createElement('div'); fill.className = 'pfill';
+    const fill = document.createElement('div');
+    fill.className = 'pfill ' + (data.color || 'green');
     bar.appendChild(fill);
-    const pct = document.createElement('span'); pct.className = 'ppct'; pct.textContent = '0%';
+    const pct = document.createElement('span'); pct.className = 'ppct';
+    if (data.color === 'purple') pct.style.color = 'var(--purple)';
+    pct.textContent = '0%';
     row.appendChild(lbl); row.appendChild(bar); row.appendChild(pct);
     termBody.appendChild(row);
     termBody.scrollTop = termBody.scrollHeight;
@@ -515,7 +684,8 @@ function addTermLine(data) {
     }, 35);
     return;
   }
-  const cls = { cmd:'p', info:'i', res:'r', warn:'w', ok:'g' }[data.type] || 'r';
+  const clsMap = { cmd:'p', info:'i', res:'r', warn:'w', ok:'g', pu:'pu', w2:'w' };
+  const cls = clsMap[data.type] || 'r';
   const el = document.createElement('span');
   el.className = 't-line';
   el.innerHTML = `<span class="${cls}">${esc(data.t)}</span>`;
@@ -533,10 +703,9 @@ function nextLine() {
   addTermLine(termLines[idx]);
   idx++;
   const last = termLines[idx - 1];
-  const delay = last.type === 'prog' ? 900 : last.type === 'blank' ? 180 : last.type === 'cmd' ? 100 : 55;
+  const delay = last.type === 'prog' ? 900 : last.type === 'blank' ? 180 : last.type === 'cmd' ? 120 : 60;
   setTimeout(nextLine, delay);
 }
-
 setTimeout(nextLine, 600);
 </script>
 </body>
