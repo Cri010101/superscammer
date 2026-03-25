@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚠ ANTISCAM — Aviator Fraud Alert</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #00FF41;
+  --green2: #00CC33;
+  --red: #FF003C;
+  --orange: #FF6600;
+  --yellow: #FFE000;
+  --cyan: #00FFFF;
+  --bg: #000000;
+  --bg2: #030A03;
+  --bg3: #050F05;
+  --mono: 'Share Tech Mono', monospace;
+  --orb: 'Orbitron', sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--green);
+  font-family: var(--mono);
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: crosshair;
+}
+#matrix-canvas {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  opacity: 0.07; z-index: 0; pointer-events: none;
+}
+body::after {
+  content: '';
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.4) 3px,rgba(0,0,0,0.4) 4px);
+  pointer-events: none; z-index: 9998;
+}
+body::before {
+  content: '';
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.8) 100%);
+  pointer-events: none; z-index: 9997;
+}
+.wrap { position: relative; z-index: 10; }
+
+.top-bar {
+  background: var(--red); color: #000;
+  font-family: var(--orb); font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 6px 0; text-align: center;
+  animation: bar-flash 1.5s infinite; overflow: hidden;
+}
+@keyframes bar-flash {
+  0%,49%,100% { background: var(--red); color: #000; }
+  50%,99% { background: #000; color: var(--red); }
+}
+.ticker { display: inline-block; animation: ticker 28s linear infinite; white-space: nowrap; }
+@keyframes ticker { from { transform: translateX(100vw); } to { transform: translateX(-100%); } }
+
+header {
+  padding: 24px 32px 20px;
+  border-bottom: 1px solid #0A2A0A;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 12px;
+}
+.header-left { display: flex; align-items: center; gap: 16px; }
+.skull {
+  font-size: 2.5rem;
+  animation: skull-pulse 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px var(--red));
+}
+@keyframes skull-pulse {
+  0%,100% { filter: drop-shadow(0 0 8px var(--red)); }
+  50% { filter: drop-shadow(0 0 20px var(--red)) brightness(1.3); }
+}
+.brand h1 {
+  font-family: var(--orb); font-size: 1.4rem; font-weight: 900;
+  color: var(--red); letter-spacing: 0.1em;
+  text-shadow: 0 0 20px rgba(255,0,60,0.6);
+  animation: glitch-text 4s infinite;
+}
+@keyframes glitch-text {
+  0%,92%,100% { text-shadow: 0 0 20px rgba(255,0,60,0.6); transform: none; }
+  93% { transform: translate(-2px,0); text-shadow: 2px 0 #00FFFF, -2px 0 var(--red); }
+  94% { transform: translate(2px,0); text-shadow: -2px 0 #00FFFF, 2px 0 var(--red); }
+  95% { transform: none; }
+}
+.brand p { font-size: 0.65rem; color: #1A5A1A; letter-spacing: 0.15em; margin-top: 2px; }
+.status-live {
+  font-family: var(--orb); font-size: 0.6rem; color: var(--green);
+  letter-spacing: 0.2em; display: flex; align-items: center; gap: 6px; justify-content: flex-end;
+}
+.live-dot {
+  width: 8px; height: 8px; background: var(--green); border-radius: 50%;
+  animation: live 1s infinite; box-shadow: 0 0 6px var(--green);
+}
+@keyframes live { 0%,100%{opacity:1;} 50%{opacity:0.2;} }
+.status-time { font-size: 0.65rem; color: #1A5A1A; margin-top: 4px; }
+
+main { max-width: 1000px; margin: 0 auto; padding: 40px 24px 60px; }
+
+.alert-hero {
+  border: 1px solid var(--red);
+  background: rgba(255,0,60,0.04);
+  padding: 36px; margin-bottom: 40px;
+  position: relative; overflow: hidden;
+  animation: hero-pulse 3s ease-in-out infinite;
+}
+@keyframes hero-pulse {
+  0%,100% { box-shadow: none; }
+  50% { box-shadow: 0 0 30px 2px rgba(255,0,60,0.1); }
+}
+.alert-hero::before {
+  content: '[ THREAT DETECTED ]';
+  position: absolute; top: -1px; left: 24px;
+  background: var(--red); color: #000;
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.25em; padding: 3px 10px;
+}
+.corner { position: absolute; width: 16px; height: 16px; }
+.corner.tl { top: 8px; left: 8px; border-top: 2px solid var(--red); border-left: 2px solid var(--red); }
+.corner.tr { top: 8px; right: 8px; border-top: 2px solid var(--red); border-right: 2px solid var(--red); }
+.corner.bl { bottom: 8px; left: 8px; border-bottom: 2px solid var(--red); border-left: 2px solid var(--red); }
+.corner.br { bottom: 8px; right: 8px; border-bottom: 2px solid var(--red); border-right: 2px solid var(--red); }
+.hero-title {
+  font-family: var(--orb); font-size: 2.6rem; font-weight: 900;
+  color: #fff; line-height: 1; margin-bottom: 6px;
+  letter-spacing: 0.04em;
+}
+.hero-title .red { color: var(--red); text-shadow: 0 0 20px rgba(255,0,60,0.7); }
+.hero-title .grn { color: var(--green); text-shadow: 0 0 20px rgba(0,255,65,0.5); }
+.hero-sub {
+  font-size: 0.78rem; color: #3A8A3A; line-height: 1.8;
+  max-width: 700px; margin-top: 16px;
+}
+
+.section-header {
+  font-family: var(--orb); font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.3em; text-transform: uppercase; color: var(--cyan);
+  margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid #0A2A0A;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-header::before { content: '>>'; color: var(--green); }
+
+.targets-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px; margin-bottom: 40px;
+}
+.target-card {
+  background: var(--bg2); border: 1px solid #0D2A0D;
+  border-left: 3px solid var(--red); padding: 20px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.target-card:hover { border-color: var(--red); box-shadow: 0 0 20px rgba(255,0,60,0.1); }
+.target-label { font-size: 0.6rem; color: #1A5A1A; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 10px; }
+.target-handle {
+  font-family: var(--orb); font-size: 1rem; color: var(--cyan);
+  font-weight: 700; text-shadow: 0 0 10px rgba(0,255,255,0.3);
+  margin-bottom: 6px; word-break: break-all;
+}
+.target-type { font-size: 0.65rem; color: #2A6A2A; margin-bottom: 14px; }
+.threat-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,0,60,0.1); border: 1px solid var(--red);
+  color: var(--red); font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 0.15em; padding: 4px 10px; text-transform: uppercase;
+}
+.threat-dot { width: 6px; height: 6px; background: var(--red); border-radius: 50%; animation: live 0.8s infinite; }
+
+.terminal { background: #000; border: 1px solid #0A2A0A; margin-bottom: 40px; overflow: hidden; }
+.term-header {
+  background: #050F05; border-bottom: 1px solid #0A2A0A;
+  padding: 8px 16px; display: flex; align-items: center; gap: 8px;
+}
+.term-dots { display: flex; gap: 5px; }
+.tdot { width: 10px; height: 10px; border-radius: 50%; }
+.tdot.r { background: #FF5F57; } .tdot.y { background: #FEBC2E; } .tdot.g { background: #28C840; }
+.term-title { font-size: 0.65rem; color: #1A5A1A; letter-spacing: 0.15em; margin-left: 8px; flex: 1; text-align: center; }
+.term-status { font-size: 0.6rem; color: var(--green); animation: blink 1s infinite; }
+@keyframes blink { 0%,49%{opacity:1;} 50%,100%{opacity:0;} }
+.term-body { padding: 20px 24px; min-height: 420px; overflow-y: auto; max-height: 520px; }
+
+.t-line { font-size: 0.75rem; line-height: 1.9; display: block; opacity: 0; transition: opacity 0.1s; }
+.t-line.show { opacity: 1; }
+.t-line .p { color: var(--green); }
+.t-line .i { color: var(--cyan); }
+.t-line .r { color: #C8C8C8; }
+.t-line .w { color: var(--red); font-weight: bold; }
+.t-line .g { color: var(--green); }
+.t-line .o { color: var(--orange); }
+.t-line .y { color: var(--yellow); }
+.t-line .d { color: #1A5A1A; }
+.blank-line { height: 10px; display: block; }
+
+.progress-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 2px 0; opacity: 0; transition: opacity 0.1s;
+}
+.progress-row.show { opacity: 1; }
+.progress-label { font-size: 0.7rem; color: #2A6A2A; min-width: 200px; }
+.pbar { height: 6px; background: #0A2A0A; border: 1px solid #0D3A0D; width: 200px; overflow: hidden; }
+.pfill { height: 100%; background: var(--green); width: 0%; box-shadow: 0 0 6px var(--green); }
+.ppct { font-size: 0.65rem; color: var(--green); min-width: 36px; }
+
+.modus-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px; margin-bottom: 40px;
+}
+.modus-card {
+  background: var(--bg2); border: 1px solid #0A2A0A;
+  border-top: 2px solid var(--orange); padding: 20px;
+}
+.modus-num { font-family: var(--orb); font-size: 1.8rem; font-weight: 900; color: rgba(255,102,0,0.15); line-height: 1; margin-bottom: 6px; }
+.modus-title { font-family: var(--orb); font-size: 0.65rem; font-weight: 700; color: var(--orange); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+.modus-desc { font-size: 0.72rem; color: #3A7A3A; line-height: 1.7; }
+
+.flags-list { background: var(--bg2); border: 1px solid #0A2A0A; margin-bottom: 40px; }
+.flag-item { display: flex; align-items: flex-start; gap: 14px; padding: 16px 24px; border-bottom: 1px solid #050F05; transition: background 0.15s; }
+.flag-item:last-child { border-bottom: none; }
+.flag-item:hover { background: rgba(0,255,65,0.02); }
+.flag-icon { width: 24px; height: 24px; border: 1px solid var(--red); color: var(--red); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; flex-shrink: 0; margin-top: 2px; }
+.flag-content strong { display: block; font-size: 0.78rem; color: #CCC; margin-bottom: 3px; }
+.flag-content p { font-size: 0.7rem; color: #2A6A2A; line-height: 1.6; }
+
+.report-box { background: var(--bg2); border: 1px solid #0A2A0A; border-top: 3px solid var(--yellow); padding: 32px; margin-bottom: 40px; }
+.report-box h3 { font-family: var(--orb); font-size: 0.85rem; font-weight: 700; color: var(--yellow); letter-spacing: 0.15em; margin-bottom: 24px; text-shadow: 0 0 10px rgba(255,224,0,0.3); }
+.report-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+.r-step { background: var(--bg3); border: 1px solid #0A2A0A; padding: 20px; }
+.r-num { font-family: var(--orb); font-size: 2rem; font-weight: 900; color: rgba(255,224,0,0.12); line-height: 1; margin-bottom: 6px; }
+.r-title { font-family: var(--orb); font-size: 0.6rem; font-weight: 700; color: var(--yellow); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+.r-desc { font-size: 0.7rem; color: #2A6A2A; line-height: 1.7; }
+.r-desc a { color: var(--cyan); text-decoration: none; }
+.r-desc a:hover { text-decoration: underline; }
+
+footer { border-top: 1px solid #0A2A0A; padding: 24px 32px; text-align: center; }
+footer p { font-size: 0.62rem; color: #1A4A1A; letter-spacing: 0.05em; line-height: 2; }
+
+.glitch-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 9996; opacity: 0; }
+
+@media (max-width: 600px) {
+  .hero-title { font-size: 1.8rem; }
+  main { padding: 24px 16px 40px; }
+  header { padding: 16px; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="matrix-canvas"></canvas>
+<div class="glitch-overlay" id="glitch"></div>
+
+<div class="wrap">
+
+<div class="top-bar">
+  <span class="ticker">
+    ⚠ ALLERTA ATTIVA · TRUFFA AVIATOR ALGORITMI · CANALI: @it_official_managerr · @Sergio_ProfessorStrategie_bot · @sergio_proff_bot · NON INVIATE DENARO · SEGNALATE ALLA POLIZIA POSTALE · commissariatodips.it · ⚠ ALLERTA ATTIVA · TRUFFA AVIATOR ALGORITMI · CANALI: @it_official_managerr · @Sergio_ProfessorStrategie_bot · @sergio_proff_bot · NON INVIATE DENARO ·
+  </span>
+</div>
+
+<header>
+  <div class="header-left">
+    <div class="skull">☠</div>
+    <div class="brand">
+      <h1>ANTISCAM_ITALIA</h1>
+      <p>// SISTEMA DI ALLERTA TRUFFE ONLINE — PORTALE PUBBLICO</p>
+    </div>
+  </div>
+  <div>
+    <div class="status-live"><div class="live-dot"></div> SISTEMA ATTIVO</div>
+    <div class="status-time" id="clock">--:--:--</div>
+  </div>
+</header>
+
+<main>
+
+  <div class="alert-hero">
+    <div class="corner tl"></div><div class="corner tr"></div>
+    <div class="corner bl"></div><div class="corner br"></div>
+    <div class="hero-title">TRUFFA <span class="red">AVIATOR</span><br><span class="grn">ALGORITMI FALSI</span></div>
+    <div class="hero-sub">
+      Individui su Telegram si spacciano per esperti con accesso a presunti "algoritmi predittivi" per il gioco Aviator.
+      Non esiste nessun algoritmo. Il gioco usa un RNG certificato — nessun sistema esterno può prevederne i risultati.
+      Questa è una truffa organizzata finalizzata a sottrarre denaro tramite pagamenti per segnali inesistenti.
+    </div>
+  </div>
+
+  <div class="section-header">TARGET IDENTIFICATI — CANALI TELEGRAM SEGNALATI</div>
+  <div class="targets-grid">
+    <div class="target-card">
+      <div class="target-label">// ACCOUNT_01 · OPERATORE UMANO</div>
+      <div class="target-handle">@it_official_managerr</div>
+      <div class="target-type">Canale Telegram — Contatto diretto vittime</div>
+      <div class="threat-badge"><div class="threat-dot"></div> TRUFFA SEGNALATA</div>
+    </div>
+    <div class="target-card">
+      <div class="target-label">// ACCOUNT_02 · BOT AUTOMATIZZATO</div>
+      <div class="target-handle">@Sergio_ProfessorStrategie_bot</div>
+      <div class="target-type">Bot Telegram — Contatto massivo automatico</div>
+      <div class="threat-badge"><div class="threat-dot"></div> TRUFFA SEGNALATA</div>
+    </div>
+    <div class="target-card">
+      <div class="target-label">// ACCOUNT_03 · BOT SECONDARIO</div>
+      <div class="target-handle">@sergio_proff_bot</div>
+      <div class="target-type">Bot Telegram — Account di riserva/backup</div>
+      <div class="threat-badge"><div class="threat-dot"></div> TRUFFA SEGNALATA</div>
+    </div>
+  </div>
+
+  <div class="section-header">ANALISI CANALI — REPORT ALLERTA FRODI</div>
+  <div class="terminal">
+    <div class="term-header">
+      <div class="term-dots"><div class="tdot r"></div><div class="tdot y"></div><div class="tdot g"></div></div>
+      <div class="term-title">ANTISCAM_ITALIA · FRAUD_REPORT v2.4 · DOCUMENTO PUBBLICO DI ALLERTA</div>
+      <div class="term-status" id="term-status">■ RUNNING</div>
+    </div>
+    <div class="term-body" id="term-body"></div>
+  </div>
+
+  <div class="section-header">MODUS OPERANDI — COME AGISCONO</div>
+  <div class="modus-grid">
+    <div class="modus-card">
+      <div class="modus-num">01</div>
+      <div class="modus-title">Contatto Iniziale</div>
+      <div class="modus-desc">Approccio tramite bot o canale Telegram. Tono amichevole e professionale. Spesso intercettano utenti che cercano info su Aviator.</div>
+    </div>
+    <div class="modus-card">
+      <div class="modus-num">02</div>
+      <div class="modus-title">La Promessa</div>
+      <div class="modus-desc">Affermano di avere un "algoritmo esclusivo" che prevede il moltiplicatore. Mostrano screenshot di presunte vincite facilmente falsificabili.</div>
+    </div>
+    <div class="modus-card">
+      <div class="modus-num">03</div>
+      <div class="modus-title">Segnale Gratuito</div>
+      <div class="modus-desc">Inviano un primo segnale "omaggio" risultante vincente (scelto a posteriori). Serve a creare fiducia prima di chiedere soldi.</div>
+    </div>
+    <div class="modus-card">
+      <div class="modus-num">04</div>
+      <div class="modus-title">Richiesta Pagamento</div>
+      <div class="modus-desc">Chiedono denaro per "accesso VIP", abbonamenti o "investimenti garantiti". Tramite crypto, ricariche o bonifico non tracciabile.</div>
+    </div>
+    <div class="modus-card">
+      <div class="modus-num">05</div>
+      <div class="modus-title">Sparizione</div>
+      <div class="modus-desc">Dopo l'incasso spariscono o cambiano username. I bot vengono ricreati immediatamente per ricominciare su nuove vittime.</div>
+    </div>
+    <div class="modus-card">
+      <div class="modus-num">06</div>
+      <div class="modus-title">Verità Tecnica</div>
+      <div class="modus-desc">Aviator usa RNG certificato e indipendente. Nessun algoritmo esterno può prevederne i risultati. Chi dice il contrario mente.</div>
+    </div>
+  </div>
+
+  <div class="section-header">SEGNALI D'ALLARME — RED FLAGS</div>
+  <div class="flags-list">
+    <div class="flag-item"><div class="flag-icon">✗</div><div class="flag-content"><strong>Promettono guadagni certi o garantiti</strong><p>Nessun gioco d'azzardo ha esiti prevedibili. Chi garantisce vincite mente per sottrarre denaro.</p></div></div>
+    <div class="flag-item"><div class="flag-icon">✗</div><div class="flag-content"><strong>Chiedono pagamenti anticipati per "segnali" o accessi VIP</strong><p>Un servizio legittimo non richiede denaro anticipato su Telegram. È sempre indicatore di truffa.</p></div></div>
+    <div class="flag-item"><div class="flag-icon">✗</div><div class="flag-content"><strong>Usano bot automatizzati per il contatto di massa</strong><p>I bot permettono di raggiungere migliaia di persone a costo zero — tattica tipica delle truffe scalabili.</p></div></div>
+    <div class="flag-item"><div class="flag-icon">✗</div><div class="flag-content"><strong>Screenshot di vincite non verificabili</strong><p>I screenshot si falsificano in pochi secondi con qualsiasi editor. Non costituiscono prova di nulla.</p></div></div>
+    <div class="flag-item"><div class="flag-icon">✗</div><div class="flag-content"><strong>Account multipli di backup</strong><p>Avere più bot/canali di riserva è tipico di chi viene bloccato frequentemente per attività fraudolenta.</p></div></div>
+    <div class="flag-item"><div class="flag-icon">✗</div><div class="flag-content"><strong>Pressione psicologica e urgenza artificiale</strong><p>"Offerta a tempo limitato", "solo 3 posti rimasti" — tattiche per impedire alla vittima di riflettere.</p></div></div>
+  </div>
+
+  <div class="report-box">
+    <h3>[ AZIONE IMMEDIATA — COME SEGNALARE ]</h3>
+    <div class="report-steps">
+      <div class="r-step"><div class="r-num">01</div><div class="r-title">Segnala su Telegram</div><div class="r-desc">Apri il canale → tre puntini (⋮) → Segnala → Spam/Truffa. Fallo per tutti e 3 i canali identificati. Puoi anche scrivere a @SpamBot.</div></div>
+      <div class="r-step"><div class="r-num">02</div><div class="r-title">Polizia Postale</div><div class="r-desc">Denuncia online: <a href="https://www.commissariatodips.it" target="_blank">commissariatodips.it</a> oppure di persona al commissariato più vicino.</div></div>
+      <div class="r-step"><div class="r-num">03</div><div class="r-title">Conserva le Prove</div><div class="r-desc">Screenshot di tutte le conversazioni e ricevute di pagamento (crypto, ricariche, bonifici). Sono fondamentali per la denuncia.</div></div>
+      <div class="r-step"><div class="r-num">04</div><div class="r-title">Diffondi l'Allerta</div><div class="r-desc">Condividi questa pagina. Più segnalazioni ricevono le autorità, più rapidamente vengono chiusi i canali truffaldini.</div></div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>
+    ANTISCAM_ITALIA · Portale di pubblica utilità · Informazioni basate su segnalazioni ricevute<br>
+    I dati riportati (username Telegram) sono identificativi pubblici segnalati da utenti · Ultimo aggiornamento: 2025<br>
+    <span style="color:#0D2A0D">Questo sito non è affiliato con Telegram S.A. · Per contestazioni contattare tramite canali ufficiali</span>
+  </p>
+</footer>
+
+</div>
+
+<script>
+// Clock
+function updateClock() {
+  const now = new Date();
+  document.getElementById('clock').textContent = now.toTimeString().slice(0,8) + ' UTC+1';
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// Matrix rain
+const canvas = document.getElementById('matrix-canvas');
+const ctx = canvas.getContext('2d');
+function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+const chars = 'アイウエオカキクケコ0123456789ABCDEF@#$%&!?><';
+const fontSize = 14;
+let drops = Array(Math.floor(window.innerWidth / fontSize)).fill(1);
+function drawMatrix() {
+  ctx.fillStyle = 'rgba(0,0,0,0.05)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#00FF41';
+  ctx.font = fontSize + 'px Share Tech Mono';
+  for (let i = 0; i < drops.length; i++) {
+    ctx.fillText(chars[Math.floor(Math.random() * chars.length)], i * fontSize, drops[i] * fontSize);
+    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+    drops[i]++;
+  }
+}
+setInterval(drawMatrix, 50);
+
+// Glitch
+function triggerGlitch() {
+  const el = document.getElementById('glitch');
+  const y = Math.random() * 60 + 20;
+  const h = Math.random() * 3 + 1;
+  el.style.background = `linear-gradient(transparent ${y}%, rgba(255,0,60,0.12) ${y}%, rgba(255,0,60,0.12) ${y+h}%, transparent ${y+h}%)`;
+  el.style.opacity = '1';
+  setTimeout(() => { el.style.opacity = '0'; }, 80);
+}
+setInterval(triggerGlitch, 2800);
+
+// Terminal
+const termLines = [
+  { type:'cmd',  t:'root@antiscam:~$ ./analyze_fraud_report.sh --input="@it_official_managerr,@Sergio_ProfessorStrategie_bot,@sergio_proff_bot"' },
+  { type:'blank' },
+  { type:'info', t:'[*] Inizializzazione sistema di allerta frodi v2.4 ...' },
+  { type:'info', t:'[*] Caricamento database pattern truffe conosciuti ...' },
+  { type:'prog',  label:'Caricamento pattern DB', id:'p0' },
+  { type:'blank' },
+  { type:'info', t:'[*] ─── ANALISI REPORT · TARGET #1 ───────────────────────' },
+  { type:'info', t:'[*] Username        : @it_official_managerr' },
+  { type:'res',  t:'    Tipologia       : Account operatore umano (non bot)' },
+  { type:'res',  t:'    Attività nota   : Vendita segnali Aviator a pagamento' },
+  { type:'res',  t:'    Pattern truffa  : Advance-fee fraud / False endorsement' },
+  { type:'prog',  label:'Analisi pattern #1', id:'p1' },
+  { type:'warn', t:'    [!] PATTERN TRUFFA RILEVATO — ACCOUNT SEGNALATO DA UTENTI' },
+  { type:'blank' },
+  { type:'info', t:'[*] ─── ANALISI REPORT · TARGET #2 ───────────────────────' },
+  { type:'info', t:'[*] Username        : @Sergio_ProfessorStrategie_bot' },
+  { type:'res',  t:'    Tipologia       : Bot automatizzato Telegram' },
+  { type:'res',  t:'    Funzione        : Contatto massivo automatico potenziali vittime' },
+  { type:'res',  t:'    Collegamento    : Stesso schema operativo di TARGET #1' },
+  { type:'prog',  label:'Analisi pattern #2', id:'p2' },
+  { type:'warn', t:'    [!] BOT FRAUDOLENTO — RETE ORGANIZZATA RILEVATA' },
+  { type:'blank' },
+  { type:'info', t:'[*] ─── ANALISI REPORT · TARGET #3 ───────────────────────' },
+  { type:'info', t:'[*] Username        : @sergio_proff_bot' },
+  { type:'res',  t:'    Tipologia       : Bot secondario / account di backup' },
+  { type:'res',  t:'    Funzione        : Ridondanza operativa post-blocco canale principale' },
+  { type:'res',  t:'    Schema MO       : Identico a TARGET #2 — stesso operatore' },
+  { type:'prog',  label:'Analisi pattern #3', id:'p3' },
+  { type:'warn', t:'    [!] ACCOUNT BACKUP CONFERMATO — RETE ATTIVA SU PIÙ CANALI' },
+  { type:'blank' },
+  { type:'div',  t:'══════════════════════════════════════════════════════════════' },
+  { type:'ok',   t:'[✓] RIEPILOGO ALLERTA — ANTISCAM_ITALIA' },
+  { type:'ok',   t:'[✓] 3 canali segnalati come appartenenti alla stessa rete' },
+  { type:'ok',   t:'[✓] Schema: Falsi algoritmi Aviator → pagamento anticipato → fuga' },
+  { type:'ok',   t:'[✓] Nota tecnica: RNG certificato di Aviator non è prevedibile' },
+  { type:'warn', t:'[!] AZIONE: Segnala su Telegram + denuncia a commissariatodips.it' },
+  { type:'div',  t:'══════════════════════════════════════════════════════════════' },
+  { type:'blank' },
+  { type:'ok',   t:'[✓] Report completato. Condividi questa pagina per proteggere altri utenti.' },
+];
+
+const termBody = document.getElementById('term-body');
+let idx = 0;
+
+function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function addTermLine(data) {
+  if (data.type === 'blank') {
+    const d = document.createElement('span');
+    d.className = 'blank-line show';
+    termBody.appendChild(d);
+    termBody.scrollTop = termBody.scrollHeight;
+    return;
+  }
+  if (data.type === 'div') {
+    const d = document.createElement('span');
+    d.className = 't-line show';
+    d.innerHTML = `<span class="d">${esc(data.t)}</span>`;
+    termBody.appendChild(d);
+    termBody.scrollTop = termBody.scrollHeight;
+    return;
+  }
+  if (data.type === 'prog') {
+    const row = document.createElement('div');
+    row.className = 'progress-row';
+    const lbl = document.createElement('span');
+    lbl.className = 'progress-label';
+    lbl.textContent = '    [>>] ' + data.label;
+    const bar = document.createElement('div'); bar.className = 'pbar';
+    const fill = document.createElement('div'); fill.className = 'pfill';
+    bar.appendChild(fill);
+    const pct = document.createElement('span'); pct.className = 'ppct'; pct.textContent = '0%';
+    row.appendChild(lbl); row.appendChild(bar); row.appendChild(pct);
+    termBody.appendChild(row);
+    termBody.scrollTop = termBody.scrollHeight;
+    requestAnimationFrame(() => { row.classList.add('show'); });
+    let v = 0;
+    const iv = setInterval(() => {
+      v += Math.random() * 9 + 3;
+      if (v >= 100) { v = 100; clearInterval(iv); }
+      fill.style.width = v + '%';
+      pct.textContent = Math.floor(v) + '%';
+    }, 35);
+    return;
+  }
+  const cls = { cmd:'p', info:'i', res:'r', warn:'w', ok:'g' }[data.type] || 'r';
+  const el = document.createElement('span');
+  el.className = 't-line';
+  el.innerHTML = `<span class="${cls}">${esc(data.t)}</span>`;
+  termBody.appendChild(el);
+  termBody.scrollTop = termBody.scrollHeight;
+  requestAnimationFrame(() => { el.classList.add('show'); });
+}
+
+function nextLine() {
+  if (idx >= termLines.length) {
+    document.getElementById('term-status').textContent = '■ COMPLETE';
+    document.getElementById('term-status').style.animationName = 'none';
+    return;
+  }
+  addTermLine(termLines[idx]);
+  idx++;
+  const last = termLines[idx - 1];
+  const delay = last.type === 'prog' ? 900 : last.type === 'blank' ? 180 : last.type === 'cmd' ? 100 : 55;
+  setTimeout(nextLine, delay);
+}
+
+setTimeout(nextLine, 600);
+</script>
+</body>
+</html>
